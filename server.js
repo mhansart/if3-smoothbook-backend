@@ -99,8 +99,7 @@ pool.getConnection((err,connexion)=> {
 
   app.get("/api/user/:email", (req, res) => {
     connexion
-      .query(`SELECT * FROM user WHERE email = ?`, req.params.email)
-      .then((user) => {
+      .query(`SELECT * FROM user WHERE email = ?`, req.params.email, (err, user) => {
         connexion.release();
         res.json(user);
       });
@@ -108,8 +107,7 @@ pool.getConnection((err,connexion)=> {
 
   app.post("/api/Login", (req, res) => {
     connexion
-      .query(`SELECT * FROM user WHERE email = ?`, [req.body.email])
-      .then((user) => {
+      .query(`SELECT * FROM user WHERE email = ?`, [req.body.email], (err, user) => {
         if (user) {
           bcrypt
             .compare(req.body.password, user[0].password)
@@ -141,8 +139,7 @@ pool.getConnection((err,connexion)=> {
         email:req.body.email
       },
         req.params.id,
-      ])
-      .then((infos) => {
+      ], (err, infos) => {
         connexion.release();
         res.status(200).json(infos);
       })
@@ -157,8 +154,7 @@ pool.getConnection((err,connexion)=> {
       .query("UPDATE user SET password = ? WHERE id = ?", [
         result,
         req.params.id,
-      ])
-      .then((infos) => {
+      ], (err, infos) => {
         connexion.release();
         res.status(200).json(infos);
       })
@@ -178,8 +174,7 @@ pool.getConnection((err,connexion)=> {
         password:result,
         admin:req.body.admin,
       }
-      ])
-      .then((infos) => {
+      ], (err, infos) => {
         connexion.release();
         res.status(200).json(infos);
       })
@@ -191,8 +186,7 @@ pool.getConnection((err,connexion)=> {
 
   app.delete("/api/user/:id", (req, res) => {
     connexion
-      .query(`DELETE FROM user WHERE id = ?`, req.params.id)
-      .then((infos) => {
+      .query(`DELETE FROM user WHERE id = ?`, req.params.id, (err, infos) => {
         connexion.release();
         res.status(200).json(infos);
       })
@@ -203,7 +197,7 @@ pool.getConnection((err,connexion)=> {
 
   // PAGE
   app.get("/api/page", (req, res) => {
-    connexion.query(`SELECT * FROM page`).then((page) => {
+    connexion.query(`SELECT * FROM page`, (err, page) => {
       connexion.release();
       res.json(page);
     });
@@ -212,17 +206,14 @@ pool.getConnection((err,connexion)=> {
   app.get("/api/page/:route", (req, res) => {
     new Promise((resolve, reject) => {
       connexion
-        .query(`SELECT * FROM page WHERE route = ?`, req.params.route)
-        .then((page) => {
+        .query(`SELECT * FROM page WHERE route = ?`, req.params.route, (err, page) => {
           if(page[0] == undefined){
             resolve(page);
           }
             connexion
               .query(
                 `SELECT * from page_post INNER JOIN posts ON page_post.post_id = posts.id WHERE page_post.page_id = ?`,
-                [page[0].id]
-              )
-              .then((result) => {
+                [page[0].id], (err, result) => {
                 page[0].posts = result;
                 resolve(page);
               })
@@ -246,8 +237,7 @@ pool.getConnection((err,connexion)=> {
 
   app.get("/api/pageById/:id", (req, res) => {
     connexion
-      .query(`SELECT * FROM page WHERE id = ?`, req.params.id)
-      .then((page) => {
+      .query(`SELECT * FROM page WHERE id = ?`, req.params.id, (err, page) => {
         connexion.release();
         res.json(page);
       });
@@ -255,8 +245,7 @@ pool.getConnection((err,connexion)=> {
 
   app.delete("/api/page/:id", (req, res) => {
     connexion
-      .query(`DELETE FROM page WHERE id = ?`, req.params.id)
-      .then((infos) => {
+      .query(`DELETE FROM page WHERE id = ?`, req.params.id, (err, infos) => {
         connexion.release();
         res.status(200).json(infos);
       })
@@ -353,8 +342,7 @@ pool.getConnection((err,connexion)=> {
           infos_value: req.body.infos_value,
         },
         req.params.infos_name,
-      ])
-      .then((infos) => {
+      ], (err, infos) => {
         connexion.release();
         res.status(200).json(infos);
       })
@@ -508,8 +496,7 @@ pool.getConnection((err,connexion)=> {
         year:req.body.year,
         views:req.body.views,
         views_month: req.body.views_month,
-      })
-      .then((infos) => {
+      }, (err, infos) => {
         connexion.release();
         res.status(200).json(infos);
       })
@@ -526,8 +513,7 @@ pool.getConnection((err,connexion)=> {
         views_month: req.body.views_month,
       },
         req.params.month,
-      ])
-      .then((infos) => {
+      ], (err, infos) => {
         connexion.release();
         res.status(200).json(infos);
       })
