@@ -230,7 +230,6 @@ pool.getConnection((err,connexion)=> {
         res.json(listUserAll);
       })
       .catch((error) => {
-        connexion.release();
         res.json({ error: "Erreur de promesse" });
       });
   });
