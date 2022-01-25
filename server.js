@@ -135,7 +135,16 @@ mysql
     // database: "light_cms",
   })
   .then((connexion) => {
-    console.log('ici');
+    app.get('/', (req, res, next) => {
+
+      res.status(200).json({
+          status: 'success',
+          data: {
+              name: 'name of your app',
+              version: '0.1.0'
+          }
+      });
+  });
     //  USER
     app.get("/api/user", (req, res) => {
       connexion.query(`SELECT * FROM user`).then((user) => {
