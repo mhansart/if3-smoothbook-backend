@@ -125,10 +125,14 @@ async function sendMail(user, callback) {
 
 mysql
   .createConnection({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "light_cms",
+    HOST: "eu-cdbr-west-02.cleardb.net",
+    USER: "bdedbe7e2bf65a",
+    PASSWORD: "186e09d3",
+    DB: "heroku_f90ffa3af12f7e2"
+    // host: "localhost",
+    // user: "root",
+    // password: "",
+    // database: "light_cms",
   })
   .then((connexion) => {
 
