@@ -1,6 +1,6 @@
 
 var express = require("express");
-var mysql = require("promise-mysql");
+var mysql = require("mysql");
 require('dotenv').config();
 
 var multer = require("multer");
