@@ -1,3 +1,4 @@
+const config = require('../config');
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
@@ -22,8 +23,8 @@ app.listen(port, () => {
 
 
 // var express = require("express");
-// var mysql = require("promise-mysql");
-// require('dotenv').config();
+var mysql = require("promise-mysql");
+require('dotenv').config();
 
 // var multer = require("multer");
 
@@ -99,17 +100,15 @@ app.listen(port, () => {
 //   }
 //   res.send(file);
 // });
-
-
-// const dburl = process.env.MYSQL_ADDON 
-//     ||   'mysql://' + process.env.DB_USER+ ':' + process.env.DB_PASS 
-//         + '@localhost/' + process.env.DB_NAME
-
-// mysql
-//   .createConnection({
-//     dburl
-//   })
-//   .then((connexion) => {
+console.log(process.env.DB_HOST);
+mysql
+  .createConnection({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+  })
+  .then((connexion) => {console.log('connected')})
 //     //  USER
 //     app.get("/api/user", (req, res) => {
 //       connexion.query(`SELECT * FROM user`).then((user) => {
