@@ -135,7 +135,7 @@ mysql
     // database: "light_cms",
   })
   .then((connexion) => {
-
+    console.log('ici');
     //  USER
     app.get("/api/user", (req, res) => {
       connexion.query(`SELECT * FROM user`).then((user) => {
