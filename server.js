@@ -51,6 +51,7 @@ var cors = require("cors");
 app.use(cors());
 
 const port = process.env.PORT || 3500;
+app.set('port', port);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -135,16 +136,6 @@ mysql
     // database: "light_cms",
   })
   .then((connexion) => {
-    app.get('/', (req, res, next) => {
-
-      res.status(200).json({
-          status: 'success',
-          data: {
-              name: 'name of your app',
-              version: '0.1.0'
-          }
-      });
-  });
     //  USER
     app.get("/api/user", (req, res) => {
       connexion.query(`SELECT * FROM user`).then((user) => {
