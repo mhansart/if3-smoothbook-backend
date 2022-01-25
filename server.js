@@ -50,7 +50,7 @@ let bodyParser = require("body-parser");
 var cors = require("cors");
 app.use(cors());
 
-const port = 3500;
+const port = process.env.PORT || 3500;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
