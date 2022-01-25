@@ -185,7 +185,6 @@ pool.getConnection((err,connexion)=> {
   // PAGE
   app.get("/api/page", (req, res) => {
     connexion.query(`SELECT * FROM page`, (err, page) => {
-      console.log(page);
       res.json(page);
     });
   });
@@ -194,6 +193,7 @@ pool.getConnection((err,connexion)=> {
     new Promise((resolve, reject) => {
       connexion
         .query(`SELECT * FROM page WHERE route = ?`, req.params.route, (err, page) => {
+          console.log(page);
           if(err) res.status(500).json(err);
           if(page == undefined ||  page[0] == undefined){
             resolve(page);
