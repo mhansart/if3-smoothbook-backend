@@ -108,6 +108,7 @@ pool.getConnection((err,connexion)=> {
   app.post("/api/Login", (req, res) => {
     connexion
       .query(`SELECT * FROM user WHERE email = ?`, [req.body.email], (err, user) => {
+        if(err) res.status(500).json(err);
         if (user) {
           bcrypt
             .compare(req.body.password, user[0].password)
@@ -126,9 +127,6 @@ pool.getConnection((err,connexion)=> {
             });
         }
       })
-      .catch((error) => {
-        res.status(500).json(error);
-      });
   });
 
   app.put("/api/user/:id", (req,res)=>{
@@ -140,12 +138,9 @@ pool.getConnection((err,connexion)=> {
       },
         req.params.id,
       ], (err, infos) => {
-      
+        if(err) res.status(500).json(err);
         res.status(200).json(infos);
       })
-      .catch((error) => {
-        res.status(500).json(error);
-      });
   })
 
   app.put("/api/userMdp/:id", (req,res)=>{
@@ -155,12 +150,10 @@ pool.getConnection((err,connexion)=> {
         result,
         req.params.id,
       ], (err, infos) => {
-      
+        if(err) res.status(500).json(err);
         res.status(200).json(infos);
       })
-      .catch((error) => {
-        res.status(500).json(error);
-      });
+
     })
   })
 
@@ -175,24 +168,18 @@ pool.getConnection((err,connexion)=> {
         admin:req.body.admin,
       }
       ], (err, infos) => {
-      
+        if(err) res.status(500).json(err);
         res.status(200).json(infos);
       })
-      .catch((error) => {
-        res.status(500).json(error);
-      });
     })
   })
 
   app.delete("/api/user/:id", (req, res) => {
     connexion
       .query(`DELETE FROM user WHERE id = ?`, req.params.id, (err, infos) => {
-      
+        if(err) res.status(500).json(err);
         res.status(200).json(infos);
       })
-      .catch((error) => {
-        res.status(500).json(error);
-      });
   });
 
   // PAGE
@@ -207,6 +194,7 @@ pool.getConnection((err,connexion)=> {
     new Promise((resolve, reject) => {
       connexion
         .query(`SELECT * FROM page WHERE route = ?`, req.params.route, (err, page) => {
+          if(err) res.status(500).json(err);
           if(page[0] == undefined){
             resolve(page);
           }
@@ -214,16 +202,11 @@ pool.getConnection((err,connexion)=> {
               .query(
                 `SELECT * from page_post INNER JOIN posts ON page_post.post_id = posts.id WHERE page_post.page_id = ?`,
                 [page[0].id], (err, result) => {
+                  if(err) reject(error);
                 page[0].posts = result;
                 resolve(page);
               })
-              .catch((error) => {
-                reject(error);
-              });
         })
-        .catch((errorQuery) => {
-          console.log(errorQuery);
-        });
     })
       .then((listUserAll) => {
       
@@ -245,12 +228,9 @@ pool.getConnection((err,connexion)=> {
   app.delete("/api/page/:id", (req, res) => {
     connexion
       .query(`DELETE FROM page WHERE id = ?`, req.params.id, (err, infos) => {
-      
+        if(err) res.status(500).json(err);
         res.status(200).json(infos);
       })
-      .catch((error) => {
-        res.status(500).json(error);
-      });
   });
 
   app.post("/api/page", (req, res) => {
@@ -263,12 +243,10 @@ pool.getConnection((err,connexion)=> {
         active: req.body.active,
         views:'[]',
       }, (err, infos) => {
+        if(err) res.status(500).json(err);
       
         res.status(200).json(infos);
       })
-      .catch((error) => {
-        res.status(500).json(error);
-      });
   });
 
   app.put("/api/pageActive/:id", (req, res) => {
@@ -277,12 +255,9 @@ pool.getConnection((err,connexion)=> {
         req.body.active,
         req.params.id,
       ], (err, infos) => {
-      
+        if(err) res.status(500).json(err);
         res.status(200).json(infos);
       })
-      .catch((error) => {
-        res.status(500).json(error);
-      });
   });
 
   app.put("/api/page/:id", (req, res) => {
@@ -297,12 +272,9 @@ pool.getConnection((err,connexion)=> {
         },
         req.params.id,
       ], (err, infos) => {
-      
+        if(err) res.status(500).json(err);
         res.status(200).json(infos);
       })
-      .catch((error) => {
-        res.status(500).json(error);
-      });
   });
 
   app.put("/api/pageViews/:id", (req, res) => {
@@ -311,12 +283,9 @@ pool.getConnection((err,connexion)=> {
         req.body.views,
         req.params.id,
       ], (err, infos) => {
-      
+        if(err) res.status(500).json(err);
         res.status(200).json(infos);
       })
-      .catch((error) => {
-        res.status(500).json(error);
-      });
   });
 
   // Infos
@@ -335,12 +304,9 @@ pool.getConnection((err,connexion)=> {
         },
         req.params.infos_name,
       ], (err, infos) => {
-      
+        if(err) res.status(500).json(err);
         res.status(200).json(infos);
       })
-      .catch((error) => {
-        res.status(500).json(error);
-      });
   });
   
   // POST
@@ -367,12 +333,12 @@ pool.getConnection((err,connexion)=> {
         views:'[]',
         
       }, (err, infos) => {
-      
-        res.status(200).json(infos.insertId);
+        if(err){
+          res.status(500).json(error);
+        }else{
+          res.status(200).json(infos.insertId);
+        } 
       })
-      .catch((error) => {
-        res.status(500).json(error);
-      });
   });
 
   app.put("/api/post/:id", (req, res) => {
@@ -384,22 +350,20 @@ pool.getConnection((err,connexion)=> {
         date: req.body.date,
         active: req.body.active,
       },req.params.id], (err, infos) => {
-      
-        res.status(200).json(infos);
+        if(err){
+          res.status(500).json(error);
+        }else{
+          res.status(200).json(infos);
+        } 
+        
       })
-      .catch((error) => {
-        res.status(500).json(error);
-      });
   });
   app.delete("/api/post/:id", (req, res) => {
     connexion
       .query(`DELETE FROM posts WHERE id = ?`, req.params.id, (err, infos) => {
-      
+      if(err) res.status(500).json(err);
         res.status(200).json(infos);
       })
-      .catch((error) => {
-        res.status(500).json(error);
-      });
   });
   app.put("/api/postActive/:id", (req, res) => {
     connexion
@@ -407,12 +371,9 @@ pool.getConnection((err,connexion)=> {
         req.body.active,
         req.params.id,
       ], (err, infos) => {
-      
+      if(err) res.status(500).json(err);
         res.status(200).json(infos);
       })
-      .catch((error) => {
-        res.status(500).json(error);
-      });
   });
   app.post("/api/post_page", (req, res) => {
     connexion
@@ -420,12 +381,10 @@ pool.getConnection((err,connexion)=> {
         page_id: req.body.page_id,
         post_id: req.body.post_id,
       }, (err, infos) => {
+        if(err) res.status(500).json(err);
       
         res.status(200).json(infos);
       })
-      .catch((error) => {
-        res.status(500).json(error);
-      });
   });
   app.get("/api/post_page/:id", (req, res) => {
     connexion
@@ -438,11 +397,9 @@ pool.getConnection((err,connexion)=> {
     connexion
       .query(`DELETE FROM page_post WHERE post_id = ?`, [req.params.id], (err, infos) => {
       
+        if(err) res.status(500).json(err);
         res.status(200).json(infos);
       })
-      .catch((error) => {
-        res.status(500).json(error);
-      });
   });
   app.put("/api/postViews/:id", (req, res) => {
     connexion
@@ -450,12 +407,10 @@ pool.getConnection((err,connexion)=> {
         req.body.views,
         req.params.id,
       ], (err, infos) => {
+        if(err) res.status(500).json(err);
       
         res.status(200).json(infos);
       })
-      .catch((error) => {
-        res.status(500).json(error);
-      });
   });
 
   //  ANALYTICS
@@ -473,12 +428,9 @@ pool.getConnection((err,connexion)=> {
         views:req.body.views,
         views_month: req.body.views_month,
       }, (err, infos) => {
-      
+      if(err) res.status(500).json(err);
         res.status(200).json(infos);
       })
-      .catch((error) => {
-        res.status(500).json(error);
-      });
   });
   app.put("/api/views/:month", (req, res) => {
     connexion
@@ -489,12 +441,9 @@ pool.getConnection((err,connexion)=> {
       },
         req.params.month,
       ], (err, infos) => {
-      
+        if(err) res.status(500).json(err);
         res.status(200).json(infos);
       })
-      .catch((error) => {
-        res.status(500).json(error);
-      });
   });
 });
 
