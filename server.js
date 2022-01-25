@@ -263,8 +263,7 @@ pool.getConnection((err,connexion)=> {
         content: req.body.content,
         active: req.body.active,
         views:'[]',
-      })
-      .then((infos) => {
+      }, (err, infos) => {
         connexion.release();
         res.status(200).json(infos);
       })
@@ -278,8 +277,7 @@ pool.getConnection((err,connexion)=> {
       .query("UPDATE page SET active = ? WHERE id = ?", [
         req.body.active,
         req.params.id,
-      ])
-      .then((infos) => {
+      ], (err, infos) => {
         connexion.release();
         res.status(200).json(infos);
       })
@@ -300,8 +298,7 @@ pool.getConnection((err,connexion)=> {
           active: req.body.active,
         },
         req.params.id,
-      ])
-      .then((infos) => {
+      ], (err, infos) => {
         connexion.release();
         res.status(200).json(infos);
       })
@@ -316,8 +313,7 @@ pool.getConnection((err,connexion)=> {
       .query("UPDATE page SET views = ? WHERE id = ?", [
         req.body.views,
         req.params.id,
-      ])
-      .then((infos) => {
+      ], (err, infos) => {
         connexion.release();
         res.status(200).json(infos);
       })
@@ -329,7 +325,7 @@ pool.getConnection((err,connexion)=> {
 
   // Infos
   app.get("/api/infos", (req, res) => {
-    connexion.query(`SELECT * FROM infos`).then((infos) => {
+    connexion.query(`SELECT * FROM infos`, (err, infos) => {
       connexion.release();
       res.json(infos);
     });
@@ -354,13 +350,13 @@ pool.getConnection((err,connexion)=> {
   
   // POST
   app.get("/api/post", (req, res) => {
-    connexion.query(`SELECT * FROM posts`).then((post) => {
+    connexion.query(`SELECT * FROM posts`, (err, post) => {
       connexion.release();
       res.json(post);
     });
   });
   app.get("/api/post/:id", (req, res) => {
-    connexion.query(`SELECT * FROM posts WHERE id = ?`, [req.params.id]).then((post) => {
+    connexion.query(`SELECT * FROM posts WHERE id = ?`, [req.params.id], (err, post) => {
       connexion.release();
       res.json(post);
     });
@@ -375,8 +371,7 @@ pool.getConnection((err,connexion)=> {
         active: req.body.active,
         views:'[]',
         
-      })
-      .then((infos) => {
+      }, (err, infos) => {
         connexion.release();
         res.status(200).json(infos.insertId);
       })
@@ -394,8 +389,7 @@ pool.getConnection((err,connexion)=> {
         content: req.body.content,
         date: req.body.date,
         active: req.body.active,
-      },req.params.id])
-      .then((infos) => {
+      },req.params.id], (err, infos) => {
         connexion.release();
         res.status(200).json(infos);
       })
@@ -406,8 +400,7 @@ pool.getConnection((err,connexion)=> {
   });
   app.delete("/api/post/:id", (req, res) => {
     connexion
-      .query(`DELETE FROM posts WHERE id = ?`, req.params.id)
-      .then((infos) => {
+      .query(`DELETE FROM posts WHERE id = ?`, req.params.id, (err, infos) => {
         connexion.release();
         res.status(200).json(infos);
       })
@@ -421,8 +414,7 @@ pool.getConnection((err,connexion)=> {
       .query("UPDATE posts SET active = ? WHERE id = ?", [
         req.body.active,
         req.params.id,
-      ])
-      .then((infos) => {
+      ], (err, infos) => {
         connexion.release();
         res.status(200).json(infos);
       })
@@ -436,8 +428,7 @@ pool.getConnection((err,connexion)=> {
       .query(`INSERT INTO page_post SET ?`, {
         page_id: req.body.page_id,
         post_id: req.body.post_id,
-      })
-      .then((infos) => {
+      }, (err, infos) => {
         connexion.release();
         res.status(200).json(infos);
       })
@@ -448,16 +439,14 @@ pool.getConnection((err,connexion)=> {
   });
   app.get("/api/post_page/:id", (req, res) => {
     connexion
-      .query(`SELECT * FROM page_post WHERE post_id = ?`, [req.params.id])
-      .then((post) => {
+      .query(`SELECT * FROM page_post WHERE post_id = ?`, [req.params.id], (err, post) => {
         connexion.release();
         res.json(post);
       });
   });
   app.delete("/api/post_page/:id", (req, res) => {
     connexion
-      .query(`DELETE FROM page_post WHERE post_id = ?`, [req.params.id])
-      .then((infos) => {
+      .query(`DELETE FROM page_post WHERE post_id = ?`, [req.params.id], (err, infos) => {
         connexion.release();
         res.status(200).json(infos);
       })
@@ -471,8 +460,7 @@ pool.getConnection((err,connexion)=> {
       .query("UPDATE posts SET views = ? WHERE id = ?", [
         req.body.views,
         req.params.id,
-      ])
-      .then((infos) => {
+      ], (err, infos) => {
         connexion.release();
         res.status(200).json(infos);
       })
@@ -484,7 +472,7 @@ pool.getConnection((err,connexion)=> {
 
   //  ANALYTICS
   app.get("/api/analytics", (req, res) => {
-    connexion.query(`SELECT * FROM analytics`).then((data) => {
+    connexion.query(`SELECT * FROM analytics`, (err, data) => {
       connexion.release();
       res.json(data);
     });
