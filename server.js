@@ -2,14 +2,6 @@ var express = require("express");
 var mysql = require("promise-mysql");
 require('dotenv').config();
 
-// send email
-const newPswRouter = express.Router();
-const morgan = require('morgan');
-const nodemailer = require('nodemailer');
-
-
-
-
 var multer = require("multer");
 
 const storage = multer.diskStorage({
@@ -83,48 +75,7 @@ app.post("/api/logo", uploadLogo.single("file"), (req, res, next) => {
   res.send(file);
 });
 
-// envoyer un email
-app.post("/api/sendmail", (req, res) => {
-  let user = req.body;
-  sendMail(user, info => {
-    res.send(info);
-  });
-});
 
-app.get("/api/user", (req, res) => {
-  return 'data';
-});
-
-async function sendMail(user, callback) {
-  // create reusable transporter object using the default SMTP transport
-  let transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-  port: 587,
-  secure: false,
-  requireTLS: true,
-  auth: {
-    user: process.env.THE_EMAIL,
-    pass: process.env.THE_PASSWORD,
-  },
-  tls: {
-    rejectUnauthorized: false
-}
-  });
-
-  let mailOptions = {
-    from: `smooth-book@noreply.com`,
-    to: `${user.email}`,
-    subject: "Réinitialisation du mot de passe",
-    html:`<h2>Réinitialisation du mot de passe</h2>
-      <p>Bonjour ${user.firstname} ${user.name} </p>
-      <p>Voici le lien pour réinitialiser ton mot de passe : <a href="http://localhost:4200/new-mdp/${user.id}">clique ici</a></p>`
-  };
-
-  // send mail with defined transport object
-  let info = await transporter.sendMail(mailOptions);
-
-  callback(info);
-}
 const dburl = process.env.MYSQL_ADDON 
     ||   'mysql://' + process.env.DB_USER+ ':' + process.env.DB_PASS 
         + '@localhost/' + process.env.DB_NAME
