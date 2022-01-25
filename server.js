@@ -99,8 +99,7 @@ require('dotenv').config();
 //   }
 //   res.send(file);
 // });
-mysql://bdedbe7e2bf65a:186e09d3@eu-cdbr-west-02.cleardb.net/heroku_f90ffa3af12f7e2?reconnect=true
-console.log(process.env);
+
 mysql
   .createConnection({
     host: process.env.DB_HOST,
