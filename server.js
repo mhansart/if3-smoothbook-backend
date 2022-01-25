@@ -78,14 +78,13 @@ app.post("/api/logo", uploadLogo.single("file"), (req, res, next) => {
   res.send(file);
 });
 
-mysql
-  .createConnection({
+var connexion = mysql.createPool({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
-  })
-  .then((connexion) => {
+    connectionLimit : 20,
+});
     //  USER
     app.get("/api/user", (req, res) => {
       connexion.query(`SELECT * FROM user`).then((user) => {
@@ -476,7 +475,6 @@ mysql
           res.status(500).json(error);
         });
     });
-  });
 
 app.listen(port, () => {
   console.log(`le serveur écoute sur le port ${port}`);
