@@ -1,4 +1,27 @@
-var express = require("express");
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
+const port = 3000;
+
+app.use(bodyParser.json());
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
+
+app.get('/', (req, res) => {
+  res.json({'message': 'ok'});
+})
+
+app.listen(port, () => {
+  console.log(`Example app listening at http://localhost:${port}`)
+});
+
+
+
+
+// var express = require("express");
 // var mysql = require("promise-mysql");
 // require('dotenv').config();
 
@@ -35,15 +58,9 @@ var express = require("express");
 
 // const bcrypt = require("bcryptjs");
 
-var app = express();
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.warn(`App listening on http://localhost:${PORT}`);
-});
+// var app = express();
 
-app.get('/', function(req, res) {
-  res.send('hello world');
-});
+
 // app.use("/uploads", express.static("uploads"));
 
 // let bodyParser = require("body-parser");
