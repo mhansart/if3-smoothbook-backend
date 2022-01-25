@@ -185,7 +185,7 @@ pool.getConnection((err,connexion)=> {
   // PAGE
   app.get("/api/page", (req, res) => {
     connexion.query(`SELECT * FROM page`, (err, page) => {
-    
+      console.log(page);
       res.json(page);
     });
   });
