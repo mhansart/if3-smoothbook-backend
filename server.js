@@ -86,11 +86,14 @@ var connexion = mysql.createPool({
     connectionLimit : 20,
 });
     //  USER
-    app.get("/api/user", (req, res) => {
-      connexion.query(`SELECT * FROM user`).then((user) => {
-        res.json(user);
-      });
-    });
+app.get("/api/user", (req, res) => {
+  connexion.query(`SELECT * FROM user`,(err, user) => {
+    if(err){
+      console.log(err);
+    }
+    res.json(user);
+  });
+});
     app.get("/api/user/:email", (req, res) => {
       connexion
         .query(`SELECT * FROM user WHERE email = ?`, req.params.email)
