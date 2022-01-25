@@ -78,7 +78,7 @@ app.post("/api/logo", uploadLogo.single("file"), (req, res, next) => {
   res.send(file);
 });
 
-var connexion = mysql.createPool({
+var pool = mysql.createPool({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
@@ -86,12 +86,10 @@ var connexion = mysql.createPool({
     connectionLimit : 20,
 });
 
-connexion.getConnection((err,connection)=> {
-  if(err)
-  throw err;
+pool.getConnection((err,connexion)=> {
+  if(err) throw err;
   console.log('Database connected successfully');
-  connection.release();
-});
+
     //  USER
 app.get("/api/user", (req, res) => {
   connexion.query(`SELECT * FROM user`,(err, user) => {
@@ -485,6 +483,7 @@ app.get("/api/user", (req, res) => {
           res.status(500).json(error);
         });
     });
+  });
 
 app.listen(port, () => {
   console.log(`le serveur écoute sur le port ${port}`);
