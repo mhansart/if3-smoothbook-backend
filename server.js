@@ -92,7 +92,7 @@ pool.getConnection((err,connexion)=> {
     //  USER
   app.get("/api/user", (req, res) => {
     connexion.query(`SELECT * FROM user`,(err, user) => {
-      connexion.release();
+    
       res.json(user);
     });
   });
@@ -100,7 +100,7 @@ pool.getConnection((err,connexion)=> {
   app.get("/api/user/:email", (req, res) => {
     connexion
       .query(`SELECT * FROM user WHERE email = ?`, req.params.email, (err, user) => {
-        connexion.release();
+      
         res.json(user);
       });
   });
@@ -122,7 +122,7 @@ pool.getConnection((err,connexion)=> {
               }else{
                 res.status(500).json({error:'error'});
               }
-              connexion.release();
+            
             });
         }
       })
@@ -140,7 +140,7 @@ pool.getConnection((err,connexion)=> {
       },
         req.params.id,
       ], (err, infos) => {
-        connexion.release();
+      
         res.status(200).json(infos);
       })
       .catch((error) => {
@@ -155,7 +155,7 @@ pool.getConnection((err,connexion)=> {
         result,
         req.params.id,
       ], (err, infos) => {
-        connexion.release();
+      
         res.status(200).json(infos);
       })
       .catch((error) => {
@@ -175,7 +175,7 @@ pool.getConnection((err,connexion)=> {
         admin:req.body.admin,
       }
       ], (err, infos) => {
-        connexion.release();
+      
         res.status(200).json(infos);
       })
       .catch((error) => {
@@ -187,7 +187,7 @@ pool.getConnection((err,connexion)=> {
   app.delete("/api/user/:id", (req, res) => {
     connexion
       .query(`DELETE FROM user WHERE id = ?`, req.params.id, (err, infos) => {
-        connexion.release();
+      
         res.status(200).json(infos);
       })
       .catch((error) => {
@@ -198,7 +198,7 @@ pool.getConnection((err,connexion)=> {
   // PAGE
   app.get("/api/page", (req, res) => {
     connexion.query(`SELECT * FROM page`, (err, page) => {
-      connexion.release();
+    
       res.json(page);
     });
   });
@@ -226,7 +226,7 @@ pool.getConnection((err,connexion)=> {
         });
     })
       .then((listUserAll) => {
-        connexion.release();
+      
         res.json(listUserAll);
       })
       .catch((error) => {
@@ -237,7 +237,7 @@ pool.getConnection((err,connexion)=> {
   app.get("/api/pageById/:id", (req, res) => {
     connexion
       .query(`SELECT * FROM page WHERE id = ?`, req.params.id, (err, page) => {
-        connexion.release();
+      
         res.json(page);
       });
   });
@@ -245,7 +245,7 @@ pool.getConnection((err,connexion)=> {
   app.delete("/api/page/:id", (req, res) => {
     connexion
       .query(`DELETE FROM page WHERE id = ?`, req.params.id, (err, infos) => {
-        connexion.release();
+      
         res.status(200).json(infos);
       })
       .catch((error) => {
@@ -263,7 +263,7 @@ pool.getConnection((err,connexion)=> {
         active: req.body.active,
         views:'[]',
       }, (err, infos) => {
-        connexion.release();
+      
         res.status(200).json(infos);
       })
       .catch((error) => {
@@ -277,11 +277,10 @@ pool.getConnection((err,connexion)=> {
         req.body.active,
         req.params.id,
       ], (err, infos) => {
-        connexion.release();
+      
         res.status(200).json(infos);
       })
       .catch((error) => {
-        connexion.release();
         res.status(500).json(error);
       });
   });
@@ -298,11 +297,10 @@ pool.getConnection((err,connexion)=> {
         },
         req.params.id,
       ], (err, infos) => {
-        connexion.release();
+      
         res.status(200).json(infos);
       })
       .catch((error) => {
-        connexion.release();
         res.status(500).json(error);
       });
   });
@@ -313,11 +311,10 @@ pool.getConnection((err,connexion)=> {
         req.body.views,
         req.params.id,
       ], (err, infos) => {
-        connexion.release();
+      
         res.status(200).json(infos);
       })
       .catch((error) => {
-        connexion.release();
         res.status(500).json(error);
       });
   });
@@ -325,7 +322,7 @@ pool.getConnection((err,connexion)=> {
   // Infos
   app.get("/api/infos", (req, res) => {
     connexion.query(`SELECT * FROM infos`, (err, infos) => {
-      connexion.release();
+    
       res.json(infos);
     });
   });
@@ -338,11 +335,10 @@ pool.getConnection((err,connexion)=> {
         },
         req.params.infos_name,
       ], (err, infos) => {
-        connexion.release();
+      
         res.status(200).json(infos);
       })
       .catch((error) => {
-        connexion.release();
         res.status(500).json(error);
       });
   });
@@ -350,13 +346,13 @@ pool.getConnection((err,connexion)=> {
   // POST
   app.get("/api/post", (req, res) => {
     connexion.query(`SELECT * FROM posts`, (err, post) => {
-      connexion.release();
+    
       res.json(post);
     });
   });
   app.get("/api/post/:id", (req, res) => {
     connexion.query(`SELECT * FROM posts WHERE id = ?`, [req.params.id], (err, post) => {
-      connexion.release();
+    
       res.json(post);
     });
   });
@@ -371,11 +367,10 @@ pool.getConnection((err,connexion)=> {
         views:'[]',
         
       }, (err, infos) => {
-        connexion.release();
+      
         res.status(200).json(infos.insertId);
       })
       .catch((error) => {
-        connexion.release();
         res.status(500).json(error);
       });
   });
@@ -389,22 +384,20 @@ pool.getConnection((err,connexion)=> {
         date: req.body.date,
         active: req.body.active,
       },req.params.id], (err, infos) => {
-        connexion.release();
+      
         res.status(200).json(infos);
       })
       .catch((error) => {
-        connexion.release();
         res.status(500).json(error);
       });
   });
   app.delete("/api/post/:id", (req, res) => {
     connexion
       .query(`DELETE FROM posts WHERE id = ?`, req.params.id, (err, infos) => {
-        connexion.release();
+      
         res.status(200).json(infos);
       })
       .catch((error) => {
-        connexion.release();
         res.status(500).json(error);
       });
   });
@@ -414,11 +407,10 @@ pool.getConnection((err,connexion)=> {
         req.body.active,
         req.params.id,
       ], (err, infos) => {
-        connexion.release();
+      
         res.status(200).json(infos);
       })
       .catch((error) => {
-        connexion.release();
         res.status(500).json(error);
       });
   });
@@ -428,29 +420,27 @@ pool.getConnection((err,connexion)=> {
         page_id: req.body.page_id,
         post_id: req.body.post_id,
       }, (err, infos) => {
-        connexion.release();
+      
         res.status(200).json(infos);
       })
       .catch((error) => {
-        connexion.release();
         res.status(500).json(error);
       });
   });
   app.get("/api/post_page/:id", (req, res) => {
     connexion
       .query(`SELECT * FROM page_post WHERE post_id = ?`, [req.params.id], (err, post) => {
-        connexion.release();
+      
         res.json(post);
       });
   });
   app.delete("/api/post_page/:id", (req, res) => {
     connexion
       .query(`DELETE FROM page_post WHERE post_id = ?`, [req.params.id], (err, infos) => {
-        connexion.release();
+      
         res.status(200).json(infos);
       })
       .catch((error) => {
-        connexion.release();
         res.status(500).json(error);
       });
   });
@@ -460,11 +450,10 @@ pool.getConnection((err,connexion)=> {
         req.body.views,
         req.params.id,
       ], (err, infos) => {
-        connexion.release();
+      
         res.status(200).json(infos);
       })
       .catch((error) => {
-        connexion.release();
         res.status(500).json(error);
       });
   });
@@ -472,7 +461,7 @@ pool.getConnection((err,connexion)=> {
   //  ANALYTICS
   app.get("/api/analytics", (req, res) => {
     connexion.query(`SELECT * FROM analytics`, (err, data) => {
-      connexion.release();
+    
       res.json(data);
     });
   });
@@ -484,11 +473,10 @@ pool.getConnection((err,connexion)=> {
         views:req.body.views,
         views_month: req.body.views_month,
       }, (err, infos) => {
-        connexion.release();
+      
         res.status(200).json(infos);
       })
       .catch((error) => {
-        connexion.release();
         res.status(500).json(error);
       });
   });
@@ -501,11 +489,10 @@ pool.getConnection((err,connexion)=> {
       },
         req.params.month,
       ], (err, infos) => {
-        connexion.release();
+      
         res.status(200).json(infos);
       })
       .catch((error) => {
-        connexion.release();
         res.status(500).json(error);
       });
   });
