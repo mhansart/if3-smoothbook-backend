@@ -51,7 +51,6 @@ var cors = require("cors");
 app.use(cors());
 
 const port = process.env.PORT || 3500;
-app.set('port', port);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -122,18 +121,13 @@ async function sendMail(user, callback) {
 
   callback(info);
 }
-
+const dburl = process.env.MYSQL_ADDON 
+    ||   'mysql://' + process.env.DB_USER+ ':' + process.env.DB_PASS 
+        + '@localhost/' + process.env.DB_NAME
 
 mysql
   .createConnection({
-    HOST: "eu-cdbr-west-02.cleardb.net",
-    USER: "bdedbe7e2bf65a",
-    PASSWORD: "186e09d3",
-    DB: "heroku_f90ffa3af12f7e2"
-    // host: "localhost",
-    // user: "root",
-    // password: "",
-    // database: "light_cms",
+    dburl
   })
   .then((connexion) => {
     //  USER
