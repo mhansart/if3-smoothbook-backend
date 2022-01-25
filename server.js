@@ -220,7 +220,6 @@ pool.getConnection((err,connexion)=> {
   app.get("/api/pageById/:id", (req, res) => {
     connexion
       .query(`SELECT * FROM page WHERE id = ?`, req.params.id, (err, page) => {
-      
         res.json(page);
       });
   });
@@ -351,7 +350,7 @@ pool.getConnection((err,connexion)=> {
         active: req.body.active,
       },req.params.id], (err, infos) => {
         if(err){
-          res.status(500).json(error);
+          res.status(500).json(err);
         }else{
           res.status(200).json(infos);
         } 
