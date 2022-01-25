@@ -193,7 +193,6 @@ pool.getConnection((err,connexion)=> {
     new Promise((resolve, reject) => {
       connexion
         .query(`SELECT * FROM page WHERE route = ?`, req.params.route, (err, page) => {
-          console.log(page);
           if(err) res.status(500).json(err);
           if(page == undefined ||  page[0] == undefined){
             resolve(page);
@@ -202,6 +201,7 @@ pool.getConnection((err,connexion)=> {
               .query(
                 `SELECT * from page_post INNER JOIN posts ON page_post.post_id = posts.id WHERE page_post.page_id = ?`,
                 [page[0].id], (err, result) => {
+                  console.log(result);
                   if(err) reject(error);
                 page[0].posts = result;
                 resolve(page);
