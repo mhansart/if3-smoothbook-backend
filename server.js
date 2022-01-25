@@ -85,6 +85,13 @@ var connexion = mysql.createPool({
     database: process.env.DB_NAME,
     connectionLimit : 20,
 });
+
+connexion.getConnection((err,connection)=> {
+  if(err)
+  throw err;
+  console.log('Database connected successfully');
+  connection.release();
+});
     //  USER
 app.get("/api/user", (req, res) => {
   connexion.query(`SELECT * FROM user`,(err, user) => {
