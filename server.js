@@ -91,6 +91,10 @@ app.post("/api/sendmail", (req, res) => {
   });
 });
 
+app.get("/api/user", (req, res) => {
+  return 'data';
+});
+
 async function sendMail(user, callback) {
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
