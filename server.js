@@ -198,7 +198,6 @@ pool.getConnection((err,connexion)=> {
           if(page && page[0] == undefined){
             resolve(page);
           }
-          if(page && page[0]){
             connexion
               .query(
                 `SELECT * from page_post INNER JOIN posts ON page_post.post_id = posts.id WHERE page_post.page_id = ?`,
@@ -207,7 +206,6 @@ pool.getConnection((err,connexion)=> {
                 page[0].posts = result;
                 resolve(page);
               })
-            }
         })
     })
       .then((listUserAll) => {
