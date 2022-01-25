@@ -40,6 +40,10 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.warn(`App listening on http://localhost:${PORT}`);
 });
+
+app.get('/', function(req, res) {
+  res.send('hello world');
+});
 // app.use("/uploads", express.static("uploads"));
 
 // let bodyParser = require("body-parser");
