@@ -108,6 +108,7 @@ pool.getConnection((err,connexion)=> {
   app.post("/api/Login", (req, res) => {
     connexion
       .query(`SELECT * FROM user WHERE email = ?`, [req.body.email], (err, user) => {
+        console.log(err);
         if(err) res.status(500).json(err);
         if (user) {
           bcrypt
