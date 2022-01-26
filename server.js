@@ -215,7 +215,6 @@ pool.then(function(p){
             })
           }
         })
-    })
   });
 
   app.get("/api/pageById/:id", (req, res) => {
