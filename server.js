@@ -201,7 +201,6 @@ pool.getConnection((err,connexion)=> {
               .query(
                 `SELECT * from page_post INNER JOIN posts ON page_post.post_id = posts.id WHERE page_post.page_id = ?`,
                 [page[0].id], (err, result) => {
-                  console.log(result);
                   if(err) reject(error);
                 page[0].posts = result;
                 resolve(page);
@@ -415,10 +414,10 @@ pool.getConnection((err,connexion)=> {
   //  ANALYTICS
   app.get("/api/analytics", (req, res) => {
     connexion.query(`SELECT * FROM analytics`, (err, data) => {
-    
       res.json(data);
     });
   });
+
   app.post("/api/views", (req, res) => {
     connexion
       .query(`INSERT INTO analytics SET ?`, {
