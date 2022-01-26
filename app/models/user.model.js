@@ -53,6 +53,18 @@ const User = function(user) {
       result(null, res);
     });
   };
+
+  User.getbyEmail = (email, result) => {
+    let query = "SELECT * FROM user WHERE email = ?";
+  
+    sql.query(query, email, (err, res) => {
+      if (err) {
+        result(null, err);
+        return;
+      }
+      result(null, res);
+    });
+  };
   
 //   Tutorial.getAllPublished = result => {
 //     sql.query("SELECT * FROM tutorials WHERE published=true", (err, res) => {

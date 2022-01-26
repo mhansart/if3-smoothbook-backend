@@ -40,6 +40,20 @@ exports.findAll = (req, res) => {
   });
 };
 
+exports.getByEmail = (req, res) => {
+
+  User.getByEmail(req.params.id, (err, data) => {
+    if (err)
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving users."
+      });
+    else res.send(data);
+  });
+};
+
+
+
 // // Find a single Tutorial by Id
 // exports.findOne = (req, res) => {
 //   Tutorial.findById(req.params.id, (err, data) => {
