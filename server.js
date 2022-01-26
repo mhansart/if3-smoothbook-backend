@@ -111,8 +111,6 @@ pool.then(function(p){
   app.post("/api/Login", (req, res) => {
     connexion
       .query(`SELECT * FROM user WHERE email = ?`, [req.body.email], (err, user) => {
-        console.log(err);
-        console.log(user);
         if (user) {
           bcrypt
             .compare(req.body.password, user[0].password)
@@ -125,7 +123,6 @@ pool.then(function(p){
                 };
                 res.json(thisUser);
               }else{
-                console.log('ici');
                 res.status(500).json({error:'error'});
               }
             
