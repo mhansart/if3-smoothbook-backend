@@ -83,12 +83,13 @@ var pool = mysql.createPool({
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
-    connectionLimit : 30,
+    connectionLimit : 10,
 });
 
 pool.getConnection((err,connexion)=> {
-  console.log('connected');
-  if(err) throw err;
+  if(err){
+    return;
+  } 
 
     //  USER
   app.get("/api/user", (req, res) => {
