@@ -3,26 +3,23 @@ module.exports = app => {
   
     var router = require("express").Router();
   
-    // // Create a new Tutorial
-    // router.post("/", tutorials.create);
+     // Create a new User
+    router.post("/", user.create);
   
-    // Retrieve all Tutorials
+    // Retrieve all Users
     router.get("/", user.findAll);
   
-    // // Retrieve all published Tutorials
-    // router.get("/published", tutorials.findAllPublished);
-  
-    // Retrieve a single Tutorial with id
+    // Retrieve a single User with id
     router.get("/:email", user.findOne);
   
-    // // Update a Tutorial with id
-    // router.put("/:id", tutorials.update);
+    // Update user with id
+    router.put("/:id", user.update);
+
+    // Update a user psw with id
+    router.put("Mdp/:id", user.updatePsw);
   
-    // // Delete a Tutorial with id
-    // router.delete("/:id", tutorials.delete);
-  
-    // // Delete all Tutorials
-    // router.delete("/", tutorials.deleteAll);
+    // Delete a Tutorial with id
+    router.delete("/:id", user.delete);
   
     app.use('/api/user', router);
   };

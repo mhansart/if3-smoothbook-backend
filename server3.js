@@ -107,13 +107,13 @@ pool.then(function(p){
   //   });
   // });
 
-  app.get("/api/user/:email", (req, res) => {
-    connexion
-      .query(`SELECT * FROM user WHERE email = ?`, req.params.email, (err, user) => {
+  // app.get("/api/user/:email", (req, res) => {
+  //   connexion
+  //     .query(`SELECT * FROM user WHERE email = ?`, req.params.email, (err, user) => {
       
-        res.json(user);
-      });
-  });
+  //       res.json(user);
+  //     });
+  // });
 
   app.post("/api/Login", (req, res) => {
     connexion
@@ -138,65 +138,65 @@ pool.then(function(p){
       })
   });
 
-  app.put("/api/user/:id", (req,res)=>{
-    connexion
-      .query("UPDATE user SET ? WHERE id = ?", [{
-        name:req.body.name,
-        firstname:req.body.firstname,
-        email:req.body.email
-      },
-        req.params.id,
-      ], (err, infos) => {
-        if(err) res.status(500).json(err);
-        res.status(200).json(infos);
-      })
-  })
+  // app.put("/api/user/:id", (req,res)=>{
+  //   connexion
+  //     .query("UPDATE user SET ? WHERE id = ?", [{
+  //       name:req.body.name,
+  //       firstname:req.body.firstname,
+  //       email:req.body.email
+  //     },
+  //       req.params.id,
+  //     ], (err, infos) => {
+  //       if(err) res.status(500).json(err);
+  //       res.status(200).json(infos);
+  //     })
+  // })
 
-  app.put("/api/userMdp/:id", (req,res)=>{
-    bcrypt.hash(req.body.password, 10).then(function (result) {
-      connexion
-      .query("UPDATE user SET password = ? WHERE id = ?", [
-        result,
-        req.params.id,
-      ], (err, infos) => {
-        if(err) res.status(500).json(err);
-        res.status(200).json(infos);
-      })
+  // app.put("/api/userMdp/:id", (req,res)=>{
+  //   bcrypt.hash(req.body.password, 10).then(function (result) {
+  //     connexion
+  //     .query("UPDATE user SET password = ? WHERE id = ?", [
+  //       result,
+  //       req.params.id,
+  //     ], (err, infos) => {
+  //       if(err) res.status(500).json(err);
+  //       res.status(200).json(infos);
+  //     })
 
-    })
-  })
+  //   })
+  // })
 
-  app.post("/api/user", (req,res)=>{
-    bcrypt.hash(req.body.password, 10).then(function (result) {
-      connexion
-      .query("INSERT INTO user SET ?", [{
-        name:req.body.name,
-        firstname:req.body.firstname,
-        email:req.body.email,
-        password:result,
-        admin:req.body.admin,
-      }
-      ], (err, infos) => {
-        if(err) res.status(500).json(err);
-        res.status(200).json(infos);
-      })
-    })
-  })
+  // app.post("/api/user", (req,res)=>{
+  //   bcrypt.hash(req.body.password, 10).then(function (result) {
+  //     connexion
+  //     .query("INSERT INTO user SET ?", [{
+  //       name:req.body.name,
+  //       firstname:req.body.firstname,
+  //       email:req.body.email,
+  //       password:result,
+  //       admin:req.body.admin,
+  //     }
+  //     ], (err, infos) => {
+  //       if(err) res.status(500).json(err);
+  //       res.status(200).json(infos);
+  //     })
+  //   })
+  // })
 
-  app.delete("/api/user/:id", (req, res) => {
-    connexion
-      .query(`DELETE FROM user WHERE id = ?`, req.params.id, (err, infos) => {
-        if(err) res.status(500).json(err);
-        res.status(200).json(infos);
-      })
-  });
+  // app.delete("/api/user/:id", (req, res) => {
+  //   connexion
+  //     .query(`DELETE FROM user WHERE id = ?`, req.params.id, (err, infos) => {
+  //       if(err) res.status(500).json(err);
+  //       res.status(200).json(infos);
+  //     })
+  // });
 
   // PAGE
-  app.get("/api/page", (req, res) => {
-    connexion.query(`SELECT * FROM page`, (err, page) => {
-      res.json(page);
-    });
-  });
+  // app.get("/api/page", (req, res) => {
+  //   connexion.query(`SELECT * FROM page`, (err, page) => {
+  //     res.json(page);
+  //   });
+  // });
 
   app.get("/api/page/:route", (req, res) => {
       connexion.query(`SELECT * FROM page WHERE route = ?`, req.params.route, (err, page) => {
@@ -216,199 +216,199 @@ pool.then(function(p){
         })
   });
 
-  app.get("/api/pageById/:id", (req, res) => {
-    connexion
-      .query(`SELECT * FROM page WHERE id = ?`, req.params.id, (err, page) => {
-        res.json(page);
-      });
-  });
+  // app.get("/api/pageById/:id", (req, res) => {
+  //   connexion
+  //     .query(`SELECT * FROM page WHERE id = ?`, req.params.id, (err, page) => {
+  //       res.json(page);
+  //     });
+  // });
 
-  app.delete("/api/page/:id", (req, res) => {
-    connexion
-      .query(`DELETE FROM page WHERE id = ?`, req.params.id, (err, infos) => {
-        if(err) res.status(500).json(err);
-        res.status(200).json(infos);
-      })
-  });
+  // app.delete("/api/page/:id", (req, res) => {
+  //   connexion
+  //     .query(`DELETE FROM page WHERE id = ?`, req.params.id, (err, infos) => {
+  //       if(err) res.status(500).json(err);
+  //       res.status(200).json(infos);
+  //     })
+  // });
 
-  app.post("/api/page", (req, res) => {
-    connexion
-      .query(`INSERT INTO page SET ?`, {
-        name: req.body.name,
-        type: req.body.type,
-        route: req.body.route,
-        content: req.body.content,
-        active: req.body.active,
-        views:'[]',
-      }, (err, infos) => {
-        if(err) res.status(500).json(err);
+  // app.post("/api/page", (req, res) => {
+  //   connexion
+  //     .query(`INSERT INTO page SET ?`, {
+  //       name: req.body.name,
+  //       type: req.body.type,
+  //       route: req.body.route,
+  //       content: req.body.content,
+  //       active: req.body.active,
+  //       views:'[]',
+  //     }, (err, infos) => {
+  //       if(err) res.status(500).json(err);
       
-        res.status(200).json(infos);
-      })
-  });
+  //       res.status(200).json(infos);
+  //     })
+  // });
 
-  app.put("/api/pageActive/:id", (req, res) => {
-    connexion
-      .query("UPDATE page SET active = ? WHERE id = ?", [
-        req.body.active,
-        req.params.id,
-      ], (err, infos) => {
-        if(err) res.status(500).json(err);
-        res.status(200).json(infos);
-      })
-  });
+  // app.put("/api/pageActive/:id", (req, res) => {
+  //   connexion
+  //     .query("UPDATE page SET active = ? WHERE id = ?", [
+  //       req.body.active,
+  //       req.params.id,
+  //     ], (err, infos) => {
+  //       if(err) res.status(500).json(err);
+  //       res.status(200).json(infos);
+  //     })
+  // });
 
-  app.put("/api/page/:id", (req, res) => {
-    connexion
-      .query("UPDATE page SET ? WHERE id = ?", [
-        {
-          name: req.body.name,
-          type: req.body.type,
-          route: req.body.route,
-          content: req.body.content,
-          active: req.body.active,
-        },
-        req.params.id,
-      ], (err, infos) => {
-        if(err) res.status(500).json(err);
-        res.status(200).json(infos);
-      })
-  });
+  // app.put("/api/page/:id", (req, res) => {
+  //   connexion
+  //     .query("UPDATE page SET ? WHERE id = ?", [
+  //       {
+  //         name: req.body.name,
+  //         type: req.body.type,
+  //         route: req.body.route,
+  //         content: req.body.content,
+  //         active: req.body.active,
+  //       },
+  //       req.params.id,
+  //     ], (err, infos) => {
+  //       if(err) res.status(500).json(err);
+  //       res.status(200).json(infos);
+  //     })
+  // });
 
-  app.put("/api/pageViews/:id", (req, res) => {
-    connexion
-      .query("UPDATE page SET views = ? WHERE id = ?", [
-        req.body.views,
-        req.params.id,
-      ], (err, infos) => {
-        if(err) res.status(500).json(err);
-        res.status(200).json(infos);
-      })
-  });
+  // app.put("/api/pageViews/:id", (req, res) => {
+  //   connexion
+  //     .query("UPDATE page SET views = ? WHERE id = ?", [
+  //       req.body.views,
+  //       req.params.id,
+  //     ], (err, infos) => {
+  //       if(err) res.status(500).json(err);
+  //       res.status(200).json(infos);
+  //     })
+  // });
 
-  // Infos
-  app.get("/api/infos", (req, res) => {
-    connexion.query(`SELECT * FROM infos`, (err, infos) => {
-      res.json(infos);
-    });
-  });
+  // // Infos
+  // app.get("/api/infos", (req, res) => {
+  //   connexion.query(`SELECT * FROM infos`, (err, infos) => {
+  //     res.json(infos);
+  //   });
+  // });
 
-  app.put("/api/infos/:infos_name", (req, res) => {
-    connexion
-      .query("UPDATE infos SET ? WHERE infos_name = ?", [
-        {
-          infos_value: req.body.infos_value,
-        },
-        req.params.infos_name,
-      ], (err, infos) => {
-        if(err) res.status(500).json(err);
-        res.status(200).json(infos);
-      })
-  });
+  // app.put("/api/infos/:infos_name", (req, res) => {
+  //   connexion
+  //     .query("UPDATE infos SET ? WHERE infos_name = ?", [
+  //       {
+  //         infos_value: req.body.infos_value,
+  //       },
+  //       req.params.infos_name,
+  //     ], (err, infos) => {
+  //       if(err) res.status(500).json(err);
+  //       res.status(200).json(infos);
+  //     })
+  // });
   
   // POST
-  app.get("/api/post", (req, res) => {
-    connexion.query(`SELECT * FROM posts`, (err, post) => {
+  // app.get("/api/post", (req, res) => {
+  //   connexion.query(`SELECT * FROM posts`, (err, post) => {
     
-      res.json(post);
-    });
-  });
-  app.get("/api/post/:id", (req, res) => {
-    connexion.query(`SELECT * FROM posts WHERE id = ?`, [req.params.id], (err, post) => {
+  //     res.json(post);
+  //   });
+  // });
+  // app.get("/api/post/:id", (req, res) => {
+  //   connexion.query(`SELECT * FROM posts WHERE id = ?`, [req.params.id], (err, post) => {
     
-      res.json(post);
-    });
-  });
-  app.post("/api/post", (req, res) => {
-    connexion
-      .query(`INSERT INTO posts SET ?`, {
-        title: req.body.title,
-        picture: req.body.picture,
-        content: req.body.content,
-        date: req.body.date,
-        active: req.body.active,
-        views:'[]',
+  //     res.json(post);
+  //   });
+  // });
+  // app.post("/api/post", (req, res) => {
+  //   connexion
+  //     .query(`INSERT INTO posts SET ?`, {
+  //       title: req.body.title,
+  //       picture: req.body.picture,
+  //       content: req.body.content,
+  //       date: req.body.date,
+  //       active: req.body.active,
+  //       views:'[]',
         
-      }, (err, infos) => {
-        if(err){
-          res.status(500).json(error);
-        }else{
-          res.status(200).json(infos.insertId);
-        } 
-      })
-  });
+  //     }, (err, infos) => {
+  //       if(err){
+  //         res.status(500).json(error);
+  //       }else{
+  //         res.status(200).json(infos.insertId);
+  //       } 
+  //     })
+  // });
 
-  app.put("/api/post/:id", (req, res) => {
-    connexion
-      .query(`UPDATE posts SET ? WHERE id=?`, [{
-        title: req.body.title,
-        picture: req.body.picture,
-        content: req.body.content,
-        date: req.body.date,
-        active: req.body.active,
-      },req.params.id], (err, infos) => {
-        if(err){
-          res.status(500).json(err);
-        }else{
-          res.status(200).json(infos);
-        } 
+  // app.put("/api/post/:id", (req, res) => {
+  //   connexion
+  //     .query(`UPDATE posts SET ? WHERE id=?`, [{
+  //       title: req.body.title,
+  //       picture: req.body.picture,
+  //       content: req.body.content,
+  //       date: req.body.date,
+  //       active: req.body.active,
+  //     },req.params.id], (err, infos) => {
+  //       if(err){
+  //         res.status(500).json(err);
+  //       }else{
+  //         res.status(200).json(infos);
+  //       } 
         
-      })
-  });
-  app.delete("/api/post/:id", (req, res) => {
-    connexion
-      .query(`DELETE FROM posts WHERE id = ?`, req.params.id, (err, infos) => {
-      if(err) res.status(500).json(err);
-        res.status(200).json(infos);
-      })
-  });
-  app.put("/api/postActive/:id", (req, res) => {
-    connexion
-      .query("UPDATE posts SET active = ? WHERE id = ?", [
-        req.body.active,
-        req.params.id,
-      ], (err, infos) => {
-      if(err) res.status(500).json(err);
-        res.status(200).json(infos);
-      })
-  });
-  app.post("/api/post_page", (req, res) => {
-    connexion
-      .query(`INSERT INTO page_post SET ?`, {
-        page_id: req.body.page_id,
-        post_id: req.body.post_id,
-      }, (err, infos) => {
-        if(err) res.status(500).json(err);
+  //     })
+  // });
+  // app.delete("/api/post/:id", (req, res) => {
+  //   connexion
+  //     .query(`DELETE FROM posts WHERE id = ?`, req.params.id, (err, infos) => {
+  //     if(err) res.status(500).json(err);
+  //       res.status(200).json(infos);
+  //     })
+  // });
+  // app.put("/api/postActive/:id", (req, res) => {
+  //   connexion
+  //     .query("UPDATE posts SET active = ? WHERE id = ?", [
+  //       req.body.active,
+  //       req.params.id,
+  //     ], (err, infos) => {
+  //     if(err) res.status(500).json(err);
+  //       res.status(200).json(infos);
+  //     })
+  // });
+  // app.post("/api/post_page", (req, res) => {
+  //   connexion
+  //     .query(`INSERT INTO page_post SET ?`, {
+  //       page_id: req.body.page_id,
+  //       post_id: req.body.post_id,
+  //     }, (err, infos) => {
+  //       if(err) res.status(500).json(err);
       
-        res.status(200).json(infos);
-      })
-  });
-  app.get("/api/post_page/:id", (req, res) => {
-    connexion
-      .query(`SELECT * FROM page_post WHERE post_id = ?`, [req.params.id], (err, post) => {
+  //       res.status(200).json(infos);
+  //     })
+  // });
+  // app.get("/api/post_page/:id", (req, res) => {
+  //   connexion
+  //     .query(`SELECT * FROM page_post WHERE post_id = ?`, [req.params.id], (err, post) => {
       
-        res.json(post);
-      });
-  });
-  app.delete("/api/post_page/:id", (req, res) => {
-    connexion
-      .query(`DELETE FROM page_post WHERE post_id = ?`, [req.params.id], (err, infos) => {
+  //       res.json(post);
+  //     });
+  // });
+  // app.delete("/api/post_page/:id", (req, res) => {
+  //   connexion
+  //     .query(`DELETE FROM page_post WHERE post_id = ?`, [req.params.id], (err, infos) => {
       
-        if(err) res.status(500).json(err);
-        res.status(200).json(infos);
-      })
-  });
-  app.put("/api/postViews/:id", (req, res) => {
-    connexion
-      .query("UPDATE posts SET views = ? WHERE id = ?", [
-        req.body.views,
-        req.params.id,
-      ], (err, infos) => {
-        if(err) res.status(500).json(err);
+  //       if(err) res.status(500).json(err);
+  //       res.status(200).json(infos);
+  //     })
+  // });
+  // app.put("/api/postViews/:id", (req, res) => {
+  //   connexion
+  //     .query("UPDATE posts SET views = ? WHERE id = ?", [
+  //       req.body.views,
+  //       req.params.id,
+  //     ], (err, infos) => {
+  //       if(err) res.status(500).json(err);
       
-        res.status(200).json(infos);
-      })
-  });
+  //       res.status(200).json(infos);
+  //     })
+  // });
 
   //  ANALYTICS
   app.get("/api/analytics", (req, res) => {
@@ -445,6 +445,6 @@ pool.then(function(p){
   });
 });
 
-app.listen(port, () => {
-  console.log(`le serveur écoute sur le port ${port}`);
-});
+// app.listen(port, () => {
+//   console.log(`le serveur écoute sur le port ${port}`);
+// });
