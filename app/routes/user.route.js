@@ -13,7 +13,7 @@ module.exports = app => {
     // router.get("/published", tutorials.findAllPublished);
   
     // Retrieve a single Tutorial with id
-    router.get("/:email", user.getByEmail);
+    router.get("/:email", user.findOne);
   
     // // Update a Tutorial with id
     // router.put("/:id", tutorials.update);

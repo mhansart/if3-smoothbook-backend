@@ -40,36 +40,23 @@ exports.findAll = (req, res) => {
   });
 };
 
-exports.getByEmail = (req, res) => {
 
-  User.getByEmail(req.params.id, (err, data) => {
-    if (err)
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving users."
-      });
-    else res.send(data);
+ // Find a single user by email
+exports.findOne = (req, res) => {
+  User.findByEmail(req.params.email, (err, data) => {
+    if (err) {
+      if (err.kind === "not_found") {
+        res.status(404).send({
+          message: `Not found Tutorial with email ${req.params.email}.`
+        });
+      } else {
+        res.status(500).send({
+          message: "Error retrieving Tutorial with id " + req.params.email
+        });
+      }
+    } else res.send(data);
   });
 };
-
-
-
-// // Find a single Tutorial by Id
-// exports.findOne = (req, res) => {
-//   Tutorial.findById(req.params.id, (err, data) => {
-//     if (err) {
-//       if (err.kind === "not_found") {
-//         res.status(404).send({
-//           message: `Not found Tutorial with id ${req.params.id}.`
-//         });
-//       } else {
-//         res.status(500).send({
-//           message: "Error retrieving Tutorial with id " + req.params.id
-//         });
-//       }
-//     } else res.send(data);
-//   });
-// };
 
 // // find all published Tutorials
 // exports.findAllPublished = (req, res) => {

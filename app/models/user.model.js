@@ -22,42 +22,28 @@ const User = function(user) {
 //     });
 //   };
   
-//   Tutorial.findById = (id, result) => {
-//     sql.query(`SELECT * FROM tutorials WHERE id = ${id}`, (err, res) => {
-//       if (err) {
-//         console.log("error: ", err);
-//         result(err, null);
-//         return;
-//       }
+  User.findByEmail = (email, result) => {
+    sql.query(`SELECT * FROM user WHERE email = ?`, email, (err, res) => {
+        
+      if (err) {
+        result(err, null);
+        return;
+      }
   
-//       if (res.length) {
-//         console.log("found tutorial: ", res[0]);
-//         result(null, res[0]);
-//         return;
-//       }
+      if (res.length) {
+        result(null, res[0]);
+        return;
+      }
   
-//       // not found Tutorial with the id
-//       result({ kind: "not_found" }, null);
-//     });
-//   };
+      // not found Tutorial with the id
+      result({ kind: "not_found" }, null);
+    });
+  };
   
   User.getAll = (result) => {
     let query = "SELECT * FROM user";
   
     sql.query(query, (err, res) => {
-      if (err) {
-        console.log("error: ", err);
-        result(null, err);
-        return;
-      }
-      result(null, res);
-    });
-  };
-
-  User.getbyEmail = (email, result) => {
-    let query = "SELECT * FROM user WHERE email = ?";
-  
-    sql.query(query, email, (err, res) => {
       if (err) {
         result(null, err);
         return;
