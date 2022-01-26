@@ -10,7 +10,7 @@ module.exports = app => {
     router.get("/", page.findAll);
   
     // Retrieve a single page with id
-    router.get("ById/:id", page.findOne);
+    router.get("/byId/:id", page.findOne);
 
     // Retrieve a single page with id
     router.get("/:route", page.findByRoute);
@@ -19,10 +19,10 @@ module.exports = app => {
     router.put("/:id", page.update);
 
     // Update page with id
-    router.put("Active/:id", page.updateActive);
+    router.put("/active/:id", page.updateActive);
 
     // Update page with id
-    router.put("Views/:id", page.updateViews);
+    router.put("/views/:id", page.updateViews);
   
     // Delete a Tutorial with id
     router.delete("/:id", page.delete);

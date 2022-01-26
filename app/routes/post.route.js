@@ -16,10 +16,10 @@ module.exports = app => {
     router.put("/:id", post.update);
 
     // Update post with id
-    router.put("Active/:id", post.updateActive);
+    router.put("/active/:id", post.updateActive);
 
     // Update post with id
-    router.put("Views/:id", post.updateViews);
+    router.put("/views/:id", post.updateViews);
   
     // Delete a Tutorial with id
     router.delete("/:id", post.delete);
