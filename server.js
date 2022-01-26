@@ -194,6 +194,7 @@ pool.getConnection((err,connexion)=> {
       connexion
         .query(`SELECT * FROM page WHERE route = ?`, req.params.route, (err, page) => {
           if(err) res.status(500).json(err);
+          console.log(page);
           if(page == undefined ||  page[0] == undefined){
             resolve(page);
           }
