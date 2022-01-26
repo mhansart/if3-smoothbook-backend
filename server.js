@@ -425,6 +425,7 @@ pool.then(function(p){
   //  ANALYTICS
   app.get("/api/analytics", (req, res) => {
     connexion.query(`SELECT * FROM analytics`, (err, data) => {
+      if(err) res.status(500).json(err);
       res.json(data);
     });
   });
