@@ -5,7 +5,8 @@ const app = express();
 
 var corsOptions = {
   // origin: "https://smoothbook-demo.netlify.app/"
-  origin: "http://localhost:4200"
+  // origin: "http://localhost:4200"
+  origin: "*",
 };
 
 app.use(cors(corsOptions));
