@@ -28,7 +28,7 @@ const User = function(user) {
       }
   
       if (res.length) {
-        result(null, res[0]);
+        result(null, res);
         return;
       }
   
