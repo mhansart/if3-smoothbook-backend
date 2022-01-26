@@ -204,7 +204,7 @@ pool.then(function(p){
       connexion
         .query(`SELECT * FROM page WHERE route = ?`, req.params.route, (err, page) => {
           if(page === undefined){
-            resolve();
+            resolve([]);
           }
           if(page[0] == undefined){
             resolve(page);
@@ -301,7 +301,6 @@ pool.then(function(p){
   // Infos
   app.get("/api/infos", (req, res) => {
     connexion.query(`SELECT * FROM infos`, (err, infos) => {
-      if(err) res.status(500).json(err);
       res.json(infos);
     });
   });
