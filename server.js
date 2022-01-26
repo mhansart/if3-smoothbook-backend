@@ -112,13 +112,8 @@ pool.then(function(p){
     connexion
       .query(`SELECT * FROM user WHERE email = ?`, [req.body.email], (err, user) => {
         console.log(err);
-        if(err){
-
-          throw err;
-        } 
+        console.log(user);
         if (user) {
-          console.log(req.body.password);
-          console.log(user);
           bcrypt
             .compare(req.body.password, user[0].password)
             .then(function (result) {
