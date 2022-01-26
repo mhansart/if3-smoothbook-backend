@@ -194,10 +194,9 @@ pool.getConnection((err,connexion)=> {
       connexion
         .query(`SELECT * FROM page WHERE route = ?`, req.params.route, (err, page) => {
           if(err){
-            console.log(err);
-            res.status(500).json(err);
+            reject(err)
           } 
-          console.log(page);
+
           if(page == undefined ||  page[0] == undefined){
             resolve(page);
           }
@@ -205,7 +204,7 @@ pool.getConnection((err,connexion)=> {
               .query(
                 `SELECT * from page_post INNER JOIN posts ON page_post.post_id = posts.id WHERE page_post.page_id = ?`,
                 [page[0].id], (err, result) => {
-                  if(err) reject(error);
+                  if(err) reject(err);
                 page[0].posts = result;
                 resolve(page);
               })
