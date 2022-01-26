@@ -195,8 +195,10 @@ pool.then(function(p){
     new Promise((resolve, reject) => {
       connexion
         .query(`SELECT * FROM page WHERE route = ?`, req.params.route, (err, page) => {
-
-          if(page == undefined ||  page[0] == undefined){
+          if(page === undefined){
+            resolve();
+          }
+          if(page[0] == undefined){
             resolve(page);
           }
             connexion
