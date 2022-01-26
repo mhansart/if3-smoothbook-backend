@@ -1,42 +1,42 @@
 
-var express = require("express");
-var mysql = require("promise-mysql");
-require('dotenv').config();
+// var express = require("express");
+// var mysql = require("promise-mysql");
+// require('dotenv').config();
 
-var multer = require("multer");
+// var multer = require("multer");
 
-const storage = multer.diskStorage({
-  destination: (req, file, callBack) => {
-    callBack(null, "uploads");
-  },
-  filename: (req, file, callBack) => {
-    callBack(null, `${file.originalname}`);
-  },
-});
-const storageFav = multer.diskStorage({
-  destination: (req, file, callBack) => {
-    callBack(null, "uploads");
-  },
-  filename: (req, file, callBack) => {
-    callBack(null, `favicon.ico`);
-  },
-});
-const storageLogo = multer.diskStorage({
-  destination: (req, file, callBack) => {
-    callBack(null, "uploads");
-  },
-  filename: (req, file, callBack) => {
-    callBack(null, `logo-menu-${file.originalname}`);
-  },
-});
+// const storage = multer.diskStorage({
+//   destination: (req, file, callBack) => {
+//     callBack(null, "uploads");
+//   },
+//   filename: (req, file, callBack) => {
+//     callBack(null, `${file.originalname}`);
+//   },
+// });
+// const storageFav = multer.diskStorage({
+//   destination: (req, file, callBack) => {
+//     callBack(null, "uploads");
+//   },
+//   filename: (req, file, callBack) => {
+//     callBack(null, `favicon.ico`);
+//   },
+// });
+// const storageLogo = multer.diskStorage({
+//   destination: (req, file, callBack) => {
+//     callBack(null, "uploads");
+//   },
+//   filename: (req, file, callBack) => {
+//     callBack(null, `logo-menu-${file.originalname}`);
+//   },
+// });
 
-const upload = multer({ storage: storage });
-const uploadFav = multer({ storage: storageFav });
-const uploadLogo = multer({ storage: storageLogo });
+// const upload = multer({ storage: storage });
+// const uploadFav = multer({ storage: storageFav });
+// const uploadLogo = multer({ storage: storageLogo });
 
-const bcrypt = require("bcryptjs");
+// const bcrypt = require("bcryptjs");
 
-var app = express();
+// var app = express();
 
 app.use(function(req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -47,58 +47,58 @@ app.use(function(req, res, next) {
 });
 
 
-app.use("/uploads", express.static("uploads"));
+// app.use("/uploads", express.static("uploads"));
 
-let bodyParser = require("body-parser");
-var cors = require("cors");
-app.use(cors());
+// let bodyParser = require("body-parser");
+// var cors = require("cors");
+// app.use(cors());
 
-const port = process.env.PORT || 3500;
+// const port = process.env.PORT || 3500;
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: true }));
 
-app.post("/api/files", upload.array("files"), (req, res, next) => {
-  const files = req.files;
-  if (!files) {
-    const error = new Error("No File");
-    error.httpStatusCode = 400;
-    return next(error);
-  }
-  res.send({ sttus: "ok" });
-});
-app.post("/api/favicon", uploadFav.single("file"), (req, res, next) => {
-  const file = req.file;
-  if (!file) {
-    const error = new Error("No File");
-    error.httpStatusCode = 400;
-    return next(error);
-  }
-  res.send(file);
-});
-app.post("/api/logo", uploadLogo.single("file"), (req, res, next) => {
-  const file = req.file;
-  if (!file) {
-    const error = new Error("No File");
-    error.httpStatusCode = 400;
-    return next(error);
-  }
-  res.send(file);
-});
+// app.post("/api/files", upload.array("files"), (req, res, next) => {
+//   const files = req.files;
+//   if (!files) {
+//     const error = new Error("No File");
+//     error.httpStatusCode = 400;
+//     return next(error);
+//   }
+//   res.send({ sttus: "ok" });
+// });
+// app.post("/api/favicon", uploadFav.single("file"), (req, res, next) => {
+//   const file = req.file;
+//   if (!file) {
+//     const error = new Error("No File");
+//     error.httpStatusCode = 400;
+//     return next(error);
+//   }
+//   res.send(file);
+// });
+// app.post("/api/logo", uploadLogo.single("file"), (req, res, next) => {
+//   const file = req.file;
+//   if (!file) {
+//     const error = new Error("No File");
+//     error.httpStatusCode = 400;
+//     return next(error);
+//   }
+//   res.send(file);
+// });
 
-var pool = mysql.createPool({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-    connectionLimit : 10,
-});
+// var pool = mysql.createPool({
+//     host: process.env.DB_HOST,
+//     user: process.env.DB_USER,
+//     password: process.env.DB_PASSWORD,
+//     database: process.env.DB_NAME,
+//     connectionLimit : 10,
+// });
 
-pool.then(function(p){
+// pool.then(function(p){
     
-  return  p.getConnection()
+//   return  p.getConnection()
     
-}).then(function(connexion){
+// }).then(function(connexion){
 
   //   //  USER
   // app.get("/api/user", (req, res) => {
@@ -115,28 +115,28 @@ pool.then(function(p){
   //     });
   // });
 
-  app.post("/api/Login", (req, res) => {
-    connexion
-      .query(`SELECT * FROM user WHERE email = ?`, [req.body.email], (err, user) => {
-        if (user) {
-          bcrypt
-            .compare(req.body.password, user[0].password)
-            .then(function (result) {
-              if (result) {
-                thisUser = {
-                  name: user[0].name,
-                  firstname: user[0].firstname,
-                  email:user[0].email
-                };
-                res.json(thisUser);
-              }else{
-                res.status(500).json({error:'error'});
-              }
+  // app.post("/api/Login", (req, res) => {
+  //   connexion
+  //     .query(`SELECT * FROM user WHERE email = ?`, [req.body.email], (err, user) => {
+  //       if (user) {
+  //         bcrypt
+  //           .compare(req.body.password, user[0].password)
+  //           .then(function (result) {
+  //             if (result) {
+  //               thisUser = {
+  //                 name: user[0].name,
+  //                 firstname: user[0].firstname,
+  //                 email:user[0].email
+  //               };
+  //               res.json(thisUser);
+  //             }else{
+  //               res.status(500).json({error:'error'});
+  //             }
             
-            });
-        }
-      })
-  });
+  //           });
+  //       }
+  //     })
+  // });
 
   // app.put("/api/user/:id", (req,res)=>{
   //   connexion
@@ -198,23 +198,23 @@ pool.then(function(p){
   //   });
   // });
 
-  app.get("/api/page/:route", (req, res) => {
-      connexion.query(`SELECT * FROM page WHERE route = ?`, req.params.route, (err, page) => {
-          if(err) res.status(500).json(err);
-          if(page == undefined){
-            res.json();
-          }
-          if(page[0] == undefined){
-            res.json(page);
-          }else{
-            connexion.query(`SELECT * from page_post INNER JOIN posts ON page_post.post_id = posts.id WHERE page_post.page_id = ?`, [page[0].id], (err, result) => {
-              if(err) res.status(500).json(err);
-              page[0].posts = result;
-              res.json(page);
-            })
-          }
-        })
-  });
+  // app.get("/api/page/:route", (req, res) => {
+  //     connexion.query(`SELECT * FROM page WHERE route = ?`, req.params.route, (err, page) => {
+  //         if(err) res.status(500).json(err);
+  //         if(page == undefined){
+  //           res.json();
+  //         }
+  //         if(page[0] == undefined){
+  //           res.json(page);
+  //         }else{
+  //           connexion.query(`SELECT * from page_post INNER JOIN posts ON page_post.post_id = posts.id WHERE page_post.page_id = ?`, [page[0].id], (err, result) => {
+  //             if(err) res.status(500).json(err);
+  //             page[0].posts = result;
+  //             res.json(page);
+  //           })
+  //         }
+  //       })
+  // });
 
   // app.get("/api/pageById/:id", (req, res) => {
   //   connexion
@@ -411,39 +411,39 @@ pool.then(function(p){
   // });
 
   //  ANALYTICS
-  app.get("/api/analytics", (req, res) => {
-    connexion.query(`SELECT * FROM analytics`, (err, data) => {
-      if(err) res.status(500).json(err);
-      res.json(data);
-    });
-  });
+//   app.get("/api/analytics", (req, res) => {
+//     connexion.query(`SELECT * FROM analytics`, (err, data) => {
+//       if(err) res.status(500).json(err);
+//       res.json(data);
+//     });
+//   });
 
-  app.post("/api/views", (req, res) => {
-    connexion
-      .query(`INSERT INTO analytics SET ?`, {
-        month:req.body.month,
-        year:req.body.year,
-        views:req.body.views,
-        views_month: req.body.views_month,
-      }, (err, infos) => {
-      if(err) res.status(500).json(err);
-        res.status(200).json(infos);
-      })
-  });
-  app.put("/api/views/:month", (req, res) => {
-    connexion
-      .query("UPDATE analytics SET ? WHERE month = ?", [{
-        month:req.body.month,
-        views:req.body.views,
-        views_month: req.body.views_month,
-      },
-        req.params.month,
-      ], (err, infos) => {
-        if(err) res.status(500).json(err);
-        res.status(200).json(infos);
-      })
-  });
-});
+//   app.post("/api/views", (req, res) => {
+//     connexion
+//       .query(`INSERT INTO analytics SET ?`, {
+//         month:req.body.month,
+//         year:req.body.year,
+//         views:req.body.views,
+//         views_month: req.body.views_month,
+//       }, (err, infos) => {
+//       if(err) res.status(500).json(err);
+//         res.status(200).json(infos);
+//       })
+//   });
+//   app.put("/api/views/:month", (req, res) => {
+//     connexion
+//       .query("UPDATE analytics SET ? WHERE month = ?", [{
+//         month:req.body.month,
+//         views:req.body.views,
+//         views_month: req.body.views_month,
+//       },
+//         req.params.month,
+//       ], (err, infos) => {
+//         if(err) res.status(500).json(err);
+//         res.status(200).json(infos);
+//       })
+//   });
+// });
 
 // app.listen(port, () => {
 //   console.log(`le serveur écoute sur le port ${port}`);
