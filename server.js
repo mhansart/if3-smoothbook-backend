@@ -87,6 +87,7 @@ var pool = mysql.createPool({
 });
 
 pool.getConnection((err,connexion)=> {
+  console.log('connected');
   if(err) throw err;
 
     //  USER
