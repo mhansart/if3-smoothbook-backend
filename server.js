@@ -200,32 +200,22 @@ pool.then(function(p){
   });
 
   app.get("/api/page/:route", (req, res) => {
-    new Promise((resolve, reject) => {
-      connexion
-        .query(`SELECT * FROM page WHERE route = ?`, req.params.route, (err, page) => {
-          if(page === undefined){
-            resolve([]);
+      connexion.query(`SELECT * FROM page WHERE route = ?`, req.params.route, (err, page) => {
+          if(err) res.status(500).json(err);
+          if(page == undefined){
+            res.json();
           }
           if(page[0] == undefined){
-            resolve(page);
+            res.json(page);
+          }else{
+            connexion.query(`SELECT * from page_post INNER JOIN posts ON page_post.post_id = posts.id WHERE page_post.page_id = ?`, [page[0].id], (err, result) => {
+              if(err) res.status(500).json(err);
+              page[0].posts = result;
+              res.json(page);
+            })
           }
-            connexion
-              .query(
-                `SELECT * from page_post INNER JOIN posts ON page_post.post_id = posts.id WHERE page_post.page_id = ?`,
-                [page[0].id], (err, result) => {
-                  if(err) reject(err);
-                page[0].posts = result;
-                resolve(page);
-              })
         })
     })
-      .then((listUserAll) => {
-      
-        res.json(listUserAll);
-      })
-      .catch((error) => {
-        res.json({ error: "Erreur de promesse" });
-      });
   });
 
   app.get("/api/pageById/:id", (req, res) => {
