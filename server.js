@@ -1,6 +1,6 @@
 
 var express = require("express");
-var mysql = require("mysql");
+var mysql = require("promise-mysql");
 require('dotenv').config();
 
 var multer = require("multer");
@@ -86,10 +86,11 @@ var pool = mysql.createPool({
     connectionLimit : 10,
 });
 
-pool.getConnection((err,connexion)=> {
-  if(err){
-    return;
-  } 
+pool.then(function(p){
+    
+  return  p.getConnection()
+    
+}).then(function(connexion){
 
     //  USER
   app.get("/api/user", (req, res) => {
@@ -112,8 +113,8 @@ pool.getConnection((err,connexion)=> {
       .query(`SELECT * FROM user WHERE email = ?`, [req.body.email], (err, user) => {
         console.log(err);
         if(err){
-          res.status(400).json(err);
-          return;
+
+          throw err;
         } 
         if (user) {
           console.log(req.body.password);
