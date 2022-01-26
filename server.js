@@ -202,6 +202,7 @@ pool.then(function(p){
           if(page == undefined ||  page[0] == undefined){
             resolve(page);
           }
+          console.log(page);
             connexion
               .query(
                 `SELECT * from page_post INNER JOIN posts ON page_post.post_id = posts.id WHERE page_post.page_id = ?`,
