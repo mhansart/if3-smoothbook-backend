@@ -29,7 +29,7 @@ const Page = function(page) {
       }
   
       if (res.length) {
-        result(null, res[0]);
+        result(null, res);
         return;
       }
   
@@ -148,7 +148,7 @@ const Page = function(page) {
           result({ kind: "not_found" }, null);
           return;
         }
-        result(null, { id: id, ...user });
+        result(null, { id: id, ...page });
       }
     );
   };

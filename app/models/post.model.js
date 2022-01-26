@@ -29,7 +29,7 @@ const Post = function(post) {
       }
   
       if (res.length) {
-        result(null, res[0]);
+        result(null, res);
         return;
       }
   
