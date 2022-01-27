@@ -10,7 +10,7 @@ exports.create = (req, res) => {
     });
   }
   bcrypt.hash(req.body.password, 10).then(function (result) {
-    // Create a Tutorial
+    // Create a user
     const user = new User({
       name:req.body.name,
       firstname:req.body.firstname,
@@ -24,14 +24,14 @@ exports.create = (req, res) => {
       if (err)
         res.status(500).send({
           message:
-            err.message || "Some error occurred while creating the Tutorial."
+            err.message || "Some error occurred while creating the user."
         });
       else res.send(data);
     });
   })
 };
 
-// Retrieve all Tutorials from the database (with condition).
+// Retrieve all users from the database.
 exports.findAll = (req, res) => {
 
   User.getAll((err, data) => {
@@ -51,11 +51,11 @@ exports.findOne = (req, res) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({
-          message: `Not found Tutorial with email ${req.params.email}.`
+          message: `Not found user with email ${req.params.email}.`
         });
       } else {
         res.status(500).send({
-          message: "Error retrieving Tutorial with id " + req.params.email
+          message: "Error retrieving user with id " + req.params.email
         });
       }
     } else res.send(data);
@@ -123,11 +123,11 @@ exports.delete = (req, res) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({
-          message: `Not found Tutorial with id ${req.params.id}.`
+          message: `Not found user with id ${req.params.id}.`
         });
       } else {
         res.status(500).send({
-          message: "Could not delete Tutorial with id " + req.params.id
+          message: "Could not delete user with id " + req.params.id
         });
       }
     } else res.send({ message: `User was deleted successfully!` });

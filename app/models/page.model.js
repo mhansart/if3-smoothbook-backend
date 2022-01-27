@@ -33,7 +33,7 @@ const Page = function(page) {
         return;
       }
   
-      // not found Tutorial with the id
+      // not found page with the id
       result({ kind: "not_found" }, null);
     });
   };
@@ -51,7 +51,7 @@ const Page = function(page) {
         return;
       }
   
-      // not found Tutorial with the id
+      // not found page with the id
       result({ kind: "not_found" }, null);
     });
   };
@@ -68,7 +68,7 @@ const Page = function(page) {
         return;
       }
   
-      // not found Tutorial with the id
+      // not found page with the id
       result({ kind: "not_found" }, null);
     });
   };
@@ -96,7 +96,7 @@ const Page = function(page) {
         }
   
         if (res.affectedRows == 0) {
-          // not found Tutorial with the id
+          // not found page with the id
           result({ kind: "not_found" }, null);
           return;
         }
@@ -116,7 +116,7 @@ const Page = function(page) {
         }
   
         if (res.affectedRows == 0) {
-          // not found Tutorial with the id
+          // not found page with the id
           result({ kind: "not_found" }, null);
           return;
         }
@@ -144,7 +144,7 @@ const Page = function(page) {
         }
   
         if (res.affectedRows == 0) {
-          // not found Tutorial with the id
+          // not found page with the id
           result({ kind: "not_found" }, null);
           return;
         }
@@ -162,7 +162,7 @@ const Page = function(page) {
       }
   
       if (res.affectedRows == 0) {
-        // not found Tutorial with the id
+        // not found page with the id
         result({ kind: "not_found" }, null);
         return;
       }

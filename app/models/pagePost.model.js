@@ -29,7 +29,7 @@ const PagePost = function(pagePost) {
         return;
       }
   
-      // not found Tutorial with the id
+      // not found pagepost with the id
       result({ kind: "not_found" }, null);
     });
   };
@@ -44,7 +44,7 @@ const PagePost = function(pagePost) {
       }
   
       if (res.affectedRows == 0) {
-        // not found Tutorial with the id
+        // not found pagepost with the id
         result({ kind: "not_found" }, null);
         return;
       }

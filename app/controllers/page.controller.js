@@ -1,6 +1,6 @@
 const Page = require("../models/page.model.js");
 
-// Create and Save a new User
+// Create and Save a new page
 exports.create = (req, res) => {
   // Validate request
   if (!req.body) {
@@ -8,7 +8,7 @@ exports.create = (req, res) => {
       message: "Content can not be empty!"
     });
   }
-    // Create a Tutorial
+    // Create a page
     const page = new Page({
         name: req.body.name,
         type: req.body.type,
@@ -18,49 +18,49 @@ exports.create = (req, res) => {
         views:'[]',
     });
 
-    // Save user in the database
+    // Save page in the database
     Page.create(page, (err, data) => {
       if (err)
         res.status(500).send({
           message:
-            err.message || "Some error occurred while creating the Tutorial."
+            err.message || "Some error occurred while creating the page."
         });
       else res.send(data);
     });
 };
 
-// Retrieve all Tutorials from the database (with condition).
+// Retrieve all pages from the database.
 exports.findAll = (req, res) => {
 
   Page.getAll((err, data) => {
     if (err)
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving users."
+          err.message || "Some error occurred while retrieving pages."
       });
     else res.send(data);
   });
 };
 
 
- // Find a single user by email
+ // Find a single page by id
 exports.findOne = (req, res) => {
   Page.findById(req.params.id, (err, data) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({
-          message: `Not found Tutorial with id ${req.params.id}.`
+          message: `Not found page with id ${req.params.id}.`
         });
       } else {
         res.status(500).send({
-          message: "Error retrieving Tutorial with id " + req.params.id
+          message: "Error retrieving page with id " + req.params.id
         });
       }
     } else res.send(data);
   });
 };
 
- // Find a single user by email
+ // Find a single page by route
  exports.findByRoute = (req, res) => {
   Page.findContent(req.params.route, (err, data) => {
     new Promise((resolve, reject) => {
@@ -74,7 +74,7 @@ exports.findOne = (req, res) => {
     }).then((data) => {
       res.json(data);
     }).catch((error) => {
-      res.send({ error: "Erreur de promesse All" });
+      res.send({ error: "Promise error" });
     });
   });
 };
@@ -82,7 +82,7 @@ exports.findOne = (req, res) => {
 
 
 
-// Update a User identified by the id in the request
+// Update a Page identified by the id in the request
 exports.update = (req, res) => {
   // Validate Request
   if (!req.body) {
@@ -111,7 +111,7 @@ exports.update = (req, res) => {
 };
 
 
-// Update a User identified by the id in the request
+// Update a page active identified by the id in the request
 exports.updateActive = (req, res) => {
     // Validate Request
     if (!req.body) {
@@ -127,11 +127,11 @@ exports.updateActive = (req, res) => {
         if (err) {
           if (err.kind === "not_found") {
             res.status(404).send({
-              message: `Not found User with id ${req.params.id}.`
+              message: `Not found page with id ${req.params.id}.`
             });
           } else {
             res.status(500).send({
-              message: "Error updating User with id " + req.params.id
+              message: "Error updating page with id " + req.params.id
             });
           }
         } else res.send(data);
@@ -139,7 +139,7 @@ exports.updateActive = (req, res) => {
     );
   };
 
-  // Update a User identified by the id in the request
+  // Update a page views identified by the id in the request
 exports.updateViews = (req, res) => {
     // Validate Request
     if (!req.body) {
@@ -155,11 +155,11 @@ exports.updateViews = (req, res) => {
         if (err) {
           if (err.kind === "not_found") {
             res.status(404).send({
-              message: `Not found User with id ${req.params.id}.`
+              message: `Not found page with id ${req.params.id}.`
             });
           } else {
             res.status(500).send({
-              message: "Error updating User with id " + req.params.id
+              message: "Error updating page with id " + req.params.id
             });
           }
         } else res.send(data);
@@ -168,7 +168,7 @@ exports.updateViews = (req, res) => {
   };
 
 
-// Delete a User with the specified id in the request
+// Delete a page with the specified id in the request
 exports.delete = (req, res) => {
   Page.remove(req.params.id, (err, data) => {
     if (err) {

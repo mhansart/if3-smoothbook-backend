@@ -1,6 +1,6 @@
 const Post = require("../models/post.model.js");
 
-// Create and Save a new User
+// Create and Save a new post
 exports.create = (req, res) => {
   // Validate request
   if (!req.body) {
@@ -18,7 +18,7 @@ exports.create = (req, res) => {
         views:'[]',
     });
 
-    // Save user in the database
+    // Save post in the database
     Post.create(post, (err, data) => {
       if (err)
         res.status(500).send({
@@ -29,31 +29,31 @@ exports.create = (req, res) => {
     });
 };
 
-// Retrieve all Tutorials from the database (with condition).
+// Retrieve all posts from the database.
 exports.findAll = (req, res) => {
 
   Post.getAll((err, data) => {
     if (err)
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving users."
+          err.message || "Some error occurred while retrieving posts."
       });
     else res.send(data);
   });
 };
 
 
- // Find a single user by email
+ // Find a single post by id
 exports.findOne = (req, res) => {
   Post.findById(req.params.id, (err, data) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({
-          message: `Not found Tutorial with id ${req.params.id}.`
+          message: `Not found post with id ${req.params.id}.`
         });
       } else {
         res.status(500).send({
-          message: "Error retrieving Tutorial with id " + req.params.id
+          message: "Error retrieving post with id " + req.params.id
         });
       }
     } else res.send(data);
@@ -61,7 +61,7 @@ exports.findOne = (req, res) => {
 };
 
 
-// Update a User identified by the id in the request
+// Update a post identified by the id in the request
 exports.update = (req, res) => {
   // Validate Request
   if (!req.body) {
@@ -77,11 +77,11 @@ exports.update = (req, res) => {
       if (err) {
         if (err.kind === "not_found") {
           res.status(404).send({
-            message: `Not found Page with id ${req.params.id}.`
+            message: `Not found Post with id ${req.params.id}.`
           });
         } else {
           res.status(500).send({
-            message: "Error updating Page with id " + req.params.id
+            message: "Error updating Post with id " + req.params.id
           });
         }
       } else res.send(data);
@@ -90,7 +90,7 @@ exports.update = (req, res) => {
 };
 
 
-// Update a User identified by the id in the request
+// Update a post active identified by the id in the request
 exports.updateActive = (req, res) => {
     // Validate Request
     if (!req.body) {
@@ -106,11 +106,11 @@ exports.updateActive = (req, res) => {
         if (err) {
           if (err.kind === "not_found") {
             res.status(404).send({
-              message: `Not found User with id ${req.params.id}.`
+              message: `Not found post with id ${req.params.id}.`
             });
           } else {
             res.status(500).send({
-              message: "Error updating User with id " + req.params.id
+              message: "Error updating post with id " + req.params.id
             });
           }
         } else res.send(data);
@@ -118,7 +118,7 @@ exports.updateActive = (req, res) => {
     );
   };
 
-  // Update a User identified by the id in the request
+  // Update a post views identified by the id in the request
 exports.updateViews = (req, res) => {
     // Validate Request
     if (!req.body) {
@@ -134,11 +134,11 @@ exports.updateViews = (req, res) => {
         if (err) {
           if (err.kind === "not_found") {
             res.status(404).send({
-              message: `Not found User with id ${req.params.id}.`
+              message: `Not found post with id ${req.params.id}.`
             });
           } else {
             res.status(500).send({
-              message: "Error updating User with id " + req.params.id
+              message: "Error updating post with id " + req.params.id
             });
           }
         } else res.send(data);
@@ -147,17 +147,17 @@ exports.updateViews = (req, res) => {
   };
 
 
-// Delete a User with the specified id in the request
+// Delete a post with the specified id in the request
 exports.delete = (req, res) => {
   Post.remove(req.params.id, (err, data) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({
-          message: `Not found Page with id ${req.params.id}.`
+          message: `Not found post with id ${req.params.id}.`
         });
       } else {
         res.status(500).send({
-          message: "Could not delete Page with id " + req.params.id
+          message: "Could not delete post with id " + req.params.id
         });
       }
     } else res.send({ message: `Post was deleted successfully!` });

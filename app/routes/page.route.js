@@ -12,19 +12,19 @@ module.exports = app => {
     // Retrieve a single page with id
     router.get("/byId/:id", page.findOne);
 
-    // Retrieve a single page with id
+    // Retrieve a single page with route
     router.get("/:route", page.findByRoute);
   
     // Update page with id
     router.put("/:id", page.update);
 
-    // Update page with id
+    // Update page active with id
     router.put("/active/:id", page.updateActive);
 
-    // Update page with id
+    // Update page views with id
     router.put("/views/:id", page.updateViews);
   
-    // Delete a Tutorial with id
+    // Delete a page with id
     router.delete("/:id", page.delete);
   
     app.use('/api/page', router);

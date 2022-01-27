@@ -3,13 +3,13 @@ module.exports = app => {
   
     var router = require("express").Router();
   
-     // Create a new post
+     // Create a new pagepost
     router.post("/", pagePost.create);
   
-    // Retrieve a single post with id
+    // Retrieve a single pagepost with post_id
     router.get("/:id", pagePost.findOne);
   
-    // Delete a Tutorial with id
+    // Delete a pagepost with id
     router.delete("/:id", pagePost.delete);
   
     app.use('/api/post_page', router);

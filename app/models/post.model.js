@@ -33,7 +33,7 @@ const Post = function(post) {
         return;
       }
   
-      // not found Tutorial with the id
+      // not found post with the id
       result({ kind: "not_found" }, null);
     });
   };
@@ -61,7 +61,7 @@ const Post = function(post) {
         }
   
         if (res.affectedRows == 0) {
-          // not found Tutorial with the id
+          // not found post with the id
           result({ kind: "not_found" }, null);
           return;
         }
@@ -81,7 +81,7 @@ const Post = function(post) {
         }
   
         if (res.affectedRows == 0) {
-          // not found Tutorial with the id
+          // not found post with the id
           result({ kind: "not_found" }, null);
           return;
         }
@@ -109,7 +109,7 @@ const Post = function(post) {
         }
   
         if (res.affectedRows == 0) {
-          // not found Tutorial with the id
+          // not found post with the id
           result({ kind: "not_found" }, null);
           return;
         }
@@ -127,7 +127,7 @@ const Post = function(post) {
       }
   
       if (res.affectedRows == 0) {
-        // not found Tutorial with the id
+        // not found post with the id
         result({ kind: "not_found" }, null);
         return;
       }

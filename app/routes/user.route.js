@@ -18,7 +18,7 @@ module.exports = app => {
     // Update a user psw with id
     router.put("/mdp/:id", user.updatePsw);
   
-    // Delete a Tutorial with id
+    // Delete a user with id
     router.delete("/:id", user.delete);
   
     app.use('/api/user', router);

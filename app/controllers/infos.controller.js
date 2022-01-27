@@ -2,14 +2,14 @@ const Infos = require("../models/infos.model.js");
 
 
 
-// Retrieve all Tutorials from the database (with condition).
+// Retrieve all infos from the databas.
 exports.findAll = (req, res) => {
 
   Infos.getAll((err, data) => {
     if (err)
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving users."
+          err.message || "Some error occurred while retrieving infos."
       });
     else res.send(data);
   });
@@ -18,7 +18,7 @@ exports.findAll = (req, res) => {
 
 
 
-// Update a User identified by the id in the request
+// Update an info identified by the name in the request
 exports.update = (req, res) => {
   // Validate Request
   if (!req.body) {
@@ -34,11 +34,11 @@ exports.update = (req, res) => {
       if (err) {
         if (err.kind === "not_found") {
           res.status(404).send({
-            message: `Not found User with id ${req.params.infos_value}.`
+            message: `Not found info with name ${req.params.infos_name}.`
           });
         } else {
           res.status(500).send({
-            message: "Error updating User with id " + req.params.infos_value
+            message: "Error updating info with name " + req.params.infos_name
           });
         }
       } else res.send(data);

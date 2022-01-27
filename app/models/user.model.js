@@ -32,7 +32,7 @@ const User = function(user) {
         return;
       }
   
-      // not found Tutorial with the id
+      // not found user with the id
       result({ kind: "not_found" }, null);
     });
   };
@@ -60,7 +60,7 @@ const User = function(user) {
         }
   
         if (res.affectedRows == 0) {
-          // not found Tutorial with the id
+          // not found user with the id
           result({ kind: "not_found" }, null);
           return;
         }
@@ -86,7 +86,7 @@ const User = function(user) {
         }
   
         if (res.affectedRows == 0) {
-          // not found Tutorial with the id
+          // not found user with the id
           result({ kind: "not_found" }, null);
           return;
         }
@@ -104,7 +104,7 @@ const User = function(user) {
       }
   
       if (res.affectedRows == 0) {
-        // not found Tutorial with the id
+        // not found user with the id
         result({ kind: "not_found" }, null);
         return;
       }

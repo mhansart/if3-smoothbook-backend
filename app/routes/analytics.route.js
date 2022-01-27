@@ -5,10 +5,10 @@ module.exports = app => {
   
     router.post("/", analytics.create);
 
-    // Retrieve all infos
+    // Retrieve all analytics
     router.get("/", analytics.findAll);
   
-    // Update infos with id
+    // Update analytics with month
     router.put("/:month", analytics.update);
   
     app.use('/api/analytics', router);
