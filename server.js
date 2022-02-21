@@ -45,5 +45,6 @@ require("./app/controllers/login.controller.js")(app);
 // set port, listen for requests
 const PORT = process.env.PORT || 3500;
 app.listen(PORT, () => {
+  console.log(process.env);
   console.log(`Server is running on port ${PORT}.`);
 });
