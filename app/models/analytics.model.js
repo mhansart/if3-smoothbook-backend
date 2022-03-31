@@ -32,14 +32,16 @@ const Analytics = function(analytics) {
   };
 
   Analytics.updateByMonth = (month, analytics, result) => {
+    let year = new Date().getFullYear();
     sql.query(
-      "UPDATE analytics SET ? WHERE month = ?",
+      "UPDATE analytics SET ? WHERE month = ? and year = ?",
       [ {
         month:analytics.month,
         views:analytics.views,
         views_month: analytics.views_month,
       },
       month,
+      year
       ],
       (err, res) => {
         if (err) {
